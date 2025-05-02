@@ -23,8 +23,8 @@
 
 ### 📋 TODO List
 - [x] Inference code & Gradio demo
-- [ ] Object- and Scene-level evaluation data & code (ETA: Early May)
-- [ ] Training data & code (ETA: Early May)
+- [ ] Object- and Scene-level evaluation data & code (ETA: Mid May)
+- [ ] Training data & code (ETA: Mid May)
 
 
 
