@@ -112,7 +112,9 @@ class LaRIModel(nn.Module):
         
             else:
                 return
-        
+            
+        else:
+            return
 
     @staticmethod
     def cache_pretrained_backbone(encoder: str, pretrained: bool):

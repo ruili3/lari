@@ -1,0 +1,12 @@
+torchrun --nproc_per_node=2 test.py \
+    --proj_name "eval_lari" \
+    --exp_name "eval_gso" \
+    --test_dataset "GSO(n_ldi_layers = 5, split='test', resolution=512, transform=ImgNorm, seed=777, data_path= './datasets/eval_gso', train_list_path = './data_lists/gso_list.json', test_list_path = './data_lists/gso_list.json', img_per_obj = 36, num_pts = 10000)" \
+    --model "LaRIModel(use_pretrained = None, pretrained_path = '', num_output_layer = 5, head_type = 'point')" \
+    --pretrained "lari_obj_16k_pointmap.pth" \
+    --batch_size 40 \
+    --test_criterion "SSI3DScore_Object(num_eval_pts=10000, fs_thres=[0.1, 0.05, 0.02], pts_sampling_mode='uniform')" \
+    --print_freq 20 --save_3dpts_per_n_batch 10\
+    --num_workers 8 \
+    --output_dir "results/eval_object" \
+    --wandb_dir "results/wandb_dir"

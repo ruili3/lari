@@ -1,0 +1,14 @@
+torchrun --nproc_per_node=4 train.py \
+    --proj_name "train_lari" \
+    --exp_name "train_scene_3dfront_scannetpp" \
+    --train_dataset "Front3D(n_ldi_layers = 5, split='train', resolution=512, transform=ColorJitter, aug_crop=16, seed=777, data_path= './datasets/3dfront', train_list_path = 'data_lists/3dfront_train.json', test_list_path = 'data_lists/3dfront_test.json') + ScanNetPP(n_ldi_layers = 5, split='train', resolution=512, transform=LightNoisyAugmentation, aug_crop=16, seed=777, data_path= './datasets/scannetpp_v2/data', train_list_path = './data_lists/scannetpp_48k_train.json', test_list_path = '', resize_mode= 'train', train_crop_range_h = [100, 150], train_crop_range_w = [200, 300], num_pts = 100000, do_not_save_behind_for_eval=True)" \
+    --test_dataset "SCRREAM(n_ldi_layers = 5, split='test', resolution=512, transform=ImgNorm, seed=777, data_path= './datasets/eval_scrream', train_list_path = 'data_lists/scrream_list.json', test_list_path = 'data_lists/scrream_list.json', num_pts = 100000, resize_mode= 'eval')" \
+    --model "LaRIModel(use_pretrained = 'moge_full', pretrained_path = './model.pt', num_output_layer = 5, head_type = 'point')" \
+    --train_criterion "SSIRegrSingle3D(L2CN)" \
+    --test_criterion "SSI3DScore_Scene(100000, 0.05, 'uniform')" \
+    --lr=0.00001 --min_lr=1e-06 --warmup_epochs=5 --epochs=100 --batch_size=24 --accum_iter=2 \
+    --save_freq=5 --keep_freq=10 --eval_freq=1 --print_freq=600 \
+    --n_save_intermediate 3\
+    --num_workers 8 \
+    --output_dir "ckpt/lari_3dfront_scannetpp" \
+    --wandb_dir "results/wandb_dir"

@@ -1,0 +1,12 @@
+torchrun --nproc_per_node=1 test.py \
+    --proj_name "eval_lari" \
+    --exp_name "eval_scrream" \
+    --test_dataset "SCRREAM(n_ldi_layers = 10, split='test', resolution=(1132, 874), transform=ImgNorm, seed=777, data_path= 'datasets/eval_scrream', train_list_path = 'data_lists/scrream_list.json', test_list_path = 'data_lists/scrream_list.json', num_pts = 100000, resize_mode= 'eval', enforce_img_reso_for_eval=[512,512])" \
+    --model "LaRIModel(use_pretrained = None, pretrained_path = '', num_output_layer = 5, head_type = 'point')" \
+    --pretrained "lari_scene_pointmap.pth" \
+    --batch_size 10 \
+    --test_criterion "SSI3DScore_Scene(num_eval_pts=100000, fs_thres=[0.1, 0.05, 0.02], pts_sampling_mode='uniform', eval_layers='all')" \
+    --print_freq 1 --save_3dpts_per_n_batch 5\
+    --num_workers 8 \
+    --output_dir "results/eval_scene" \
+    --wandb_dir "results/wandb_dir"

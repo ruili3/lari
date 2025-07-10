@@ -1,0 +1,14 @@
+torchrun --nproc_per_node=4 train.py \
+    --proj_name "train_lari" \
+    --exp_name "train_objaverse" \
+    --train_dataset "Objaverse(n_ldi_layers = 5, split='train', resolution=512, transform=ColorJitter, aug_crop=16, seed=777, data_path= './datasets/objaverse_16k', train_list_path = 'data_lists/objaverse_16K_train_list.json.gz', test_list_path = 'data_lists/objaverse_16K_val_list.json.gz')" \
+    --test_dataset "Objaverse(n_ldi_layers = 5, split='test', resolution=512, transform=ColorJitter, aug_crop=16, seed=777, data_path= './datasets/objaverse_16k', train_list_path = 'data_lists/objaverse_16K_train_list.json.gz', test_list_path = 'data_lists/objaverse_16K_val_list.json.gz')" \
+    --model "LaRIModel(use_pretrained = 'moge_full', pretrained_path = './model.pt', num_output_layer = 5, head_type = 'point')" \
+    --train_criterion "SSIRegrSingle3D(L2CN)" \
+    --test_criterion "SSI3DScore_Object(10000, 0.02, 'uniform')" \
+    --lr=0.0001 --min_lr=1e-06 --warmup_epochs=10 --epochs=100 --batch_size=24 --accum_iter=2 \
+    --save_freq=2 --keep_freq=10 --eval_freq=1 --print_freq=600 \
+    --n_save_intermediate 3\
+    --num_workers 10 \
+    --output_dir "ckpt/lari_objaverse16K" \
+    --wandb_dir "results/wandb_dir"

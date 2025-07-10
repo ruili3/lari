@@ -21,23 +21,26 @@
 </p>
 
 
-### 📋 TODO List
+## 📋 TODO List
 - [x] Inference code & Gradio demo
-- [ ] Object- and Scene-level evaluation data & code (ETA: Early May)
-- [ ] Training data & code (ETA: Early May)
+- [x] Object- and Scene-level evaluation data & code
+- [x] Training data & code
+- [ ] Release the GT generation code (Estimated time: within July, 2025)
 
 
-
-### 🛠️ Environment Setup
+## 🛠️ Environment Setup
+1. Create the conda environment and install required libraries:
 ```bash
 conda create -n lari python=3.10 -y
 conda activate lari
 pip install -r requirements.txt
 ```
+2. Install Pytorch3D following these [instructions](https://github.com/facebookresearch/pytorch3d/blob/main/INSTALL.md).
 
-### 🚀 Quick Start
-We currently provide the object-level model at our HuggingaFace [Model Hub](https://huggingface.co/ruili3/LaRI/tree/main). Try out the examples or your own images via the methods below:
-#### 🔹 Gradio Demo
+
+## 🚀 Quick Start
+We currently provide the object-level model at our HuggingFace [Model Hub](https://huggingface.co/ruili3/LaRI/tree/main). Try the examples or use your own images with the methods below:
+### Gradio Demo
 
 Launch the Gradio interface locally:
 
@@ -47,7 +50,7 @@ python app.py
 
 Or try it online via [HuggingFace Demo](https://huggingface.co/spaces/ruili3/LaRI).
 
-#### 🔹 Command Line
+### Command Line
 
 Run object-level modeling with:
 
@@ -59,8 +62,85 @@ python demo.py --image_path assets/cole_hardware.png
 
 
 
-### 📰 Citation
-Please cite our paper if you use the code in this repository:
+## 📊 Evaluation
+### Pre-trained weights and Evaluation Data
+| Scene Type | Pre-trained Weights | Evaluation Data |
+|----------|----------|----------|
+| Object-level    | [checkpoint](https://huggingface.co/ruili3/LaRI/resolve/main/lari_obj_16k_pointmap.pth?download=true)    | Google Scanned Objects ([data](https://huggingface.co/datasets/ruili3/LaRI_dataset/resolve/main/eval/eval_gso.zip?download=true))   |
+| Scene-level    | [checkpoint](https://huggingface.co/ruili3/LaRI/resolve/main/lari_scene_pointmap.pth?download=true)    | SCCREAM ([data](https://huggingface.co/datasets/ruili3/LaRI_dataset/resolve/main/eval/eval_scrream.zip?download=true))    |
+
+Download the pre-trained weights and unzip the evaluation data.
+
+### Object-level Evaluation
+```sh
+./scripts/eval_object.sh
+```
+
+### Scene-level Evaluation
+```sh
+./scripts/eval_scene.sh
+```
+
+NOTE: For both object and scene evaluation, set `data_path` and `test_list_path` to the customized absolute paths, set `--pretrained` to your model checkpoint path, and set `--output_dir` to specify where to store the evaluation results.
+
+
+
+## 💻 Training
+### 💾 Dataset setup
+#### 1. Objaverse (object-level)
+Download the processed Objaverse [dataset](https://huggingface.co/datasets/ruili3/LaRI_dataset/tree/main/train/objaverse), extract all files (`objaverse_chunk_<ID>.tar.gz`) into the target folder, for example:
+```sh
+mkdir ./datasets/objaverse_16k
+tar -zxvf  ./objaverse_chunk_<ID>.tar.gz -C ./datasets/objaverse_16k
+```
+
+#### 2. 3D-FRONT (scene-level)
+Download the processed 3D-FRONT [dataset](https://huggingface.co/datasets/ruili3/LaRI_dataset/tree/main/train/3dfront), extract all files to the target folder. For example:
+```sh
+mkdir ./datasets/3dfront
+tar -zxvf  ./front3d_chunk_<ID>.tar.gz -C ./datasets/3dfront
+```
+
+
+
+#### 3. ScanNet++ (scene-level)
+- Download the ScanNet++ [dataset](https://kaldir.vc.in.tum.de/scannetpp/), as well as the ScanNet++ [toolbox](https://github.com/scannetpp/scannetpp).
+- Copy the `.yml` configuration files to the ScanNet++ toolbox folder, for example:
+```sh
+cd /path/to/lari
+cp -r ./scripts/scannetpp_proc/*.yml /path/to/scannetpp/scannetpp/dslr/configs
+``` 
+- Run the following command in the ScanNet++ toolbox folder to downscale and undistort the data.
+```sh
+cd /path/to/scannetpp
+# downscale the images
+python -m dslr.downscale dslr/configs/downscale_lari.yml
+# undistort the images
+python -m dslr.undistort dslr/configs/undistort_lari.yml
+```
+- Download the ScanNet++ annotation from [here](https://huggingface.co/datasets/ruili3/LaRI_dataset/tree/main/train/scannetpp) and extract it to the `data` subfolder of your ScanNet++ path, for example
+```sh
+tar -zxvf  ./scannetpp_48k_annotation.tar.gz -C ./datasets/scannetpp_v2/data
+```
+
+
+### 🔥 Train the model
+Download MoGe pre-trained [weights](https://huggingface.co/Ruicheng/moge-vitl/resolve/main/model.pt?download=true). For training with object-level data (Objaverse), run
+```sh
+./scripts/train_object.sh
+```
+For training with scene-level data (3D-FRONT and ScanNet++), run
+```sh
+./scripts/train_scene.sh
+```
+For both training settings, set `data_path`, `train_list_path` and `test_list_path` of each dataset to your customized absolute paths, set `pretrained_path` to the downloaded MoGe weights path, set `--output_dir` and `--wandb_dir` to specify where to store the evaluation results.
+
+
+## ✨ Acknowledgement
+This prject is largely based on [DUSt3R](https://github.com/naver/dust3r), with some model weights and functions from [MoGe](https://github.com/microsoft/moge), [Zero-1-to-3](https://github.com/cvlab-columbia/zero123), and [Marigold](https://github.com/prs-eth/Marigold). Many thanks to these awesome projects for their contributions.
+
+## 📰 Citation
+Please cite our paper if you find it helpful:
 ```
 @inproceedings{li2025lari,
       title={LaRI: Layered Ray Intersections for Single-view 3D Geometric Reasoning}, 

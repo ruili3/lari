@@ -147,6 +147,5 @@ intermediate/
 *.npz
 *.obj
 *.mtl
-*.json.gz
 dcgm/
 wandb/
