@@ -23,7 +23,7 @@
 
 ## 📋 TODO List
 - [x] Inference code & Gradio demo
-- [x] Object- and Scene-level evaluation data & code
+- [x] Evaluation data & code
 - [x] Training data & code
 - [ ] Release the GT generation code (Estimated time: within July, 2025)
 
