@@ -1,0 +1,11 @@
+python ldi_distributed_gso.py \
+    --input_models_path /ibex/project/c2302/xmap/dataset/gso/files \
+	--object_path_file /mnt/slurm_home/rli/research/code/lari/dataset_curation/gso/gso_object_list.json \
+    --num_images_per_ele 12 \
+    --ele_angles 0 30 60 \
+    --azimuths_offset_angle 5 \
+    --camera_dist_low 1.6 \
+    --camera_dist_high 2.2 \
+    --render_first_n_scenes 6 \
+    --save_res_path /mnt/slurm_home/rli/research/res/lari_dataset_gen/gso \
+    --render_timeout 2000
