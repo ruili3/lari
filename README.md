@@ -5,7 +5,7 @@
 
 <sup>1</sup>KAUST · <sup>2</sup>Google · <sup>3</sup>Technical University of Munich
 
-**arXiv 2025**
+**ICML 2026**
 
 <a href="https://arxiv.org/abs/2504.18424"><img src='https://img.shields.io/badge/arXiv-KYN-red' alt='Paper PDF'></a>
 <a href='https://ruili3.github.io/lari/index.html'><img src='https://img.shields.io/badge/Project_Page-LaRI-green' alt='Project Page'></a>
@@ -25,7 +25,7 @@
 - [x] Inference code & Gradio demo
 - [x] Evaluation data & code
 - [x] Training data & code
-- [ ] Release the GT generation code (Estimated time: within July, 2025)
+- [x] Release the GT generation code
 
 
 ## 🛠️ Environment Setup
@@ -142,10 +142,12 @@ This prject is largely based on [DUSt3R](https://github.com/naver/dust3r), with 
 ## 📰 Citation
 Please cite our paper if you find it helpful:
 ```
-@inproceedings{li2025lari,
-      title={LaRI: Layered Ray Intersections for Single-view 3D Geometric Reasoning}, 
-      author={Li, Rui and Zhang, Biao and Li, Zhenyu and Tombari, Federico and Wonka, Peter},
-      booktitle={arXiv preprint arXiv:2504.18424},
-      year={2025}
+@inproceedings{li2026lari,
+  title={LaRI: Layered Ray Intersections for Single-view 3D Geometric Reasoning},
+  author={Li, Rui and Zhang, Biao and Li, Zhenyu and Tombari, Federico and Wonka, Peter},
+  booktitle={Proceedings of the 43rd International Conference on Machine Learning},
+  series={Proceedings of Machine Learning Research},
+  publisher={PMLR},
+  year={2026}
 }
 ```
