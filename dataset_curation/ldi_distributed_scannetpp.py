@@ -19,6 +19,8 @@ def parse_args():
     parser.add_argument("--workers_per_gpu", type=int, default=-1)
     parser.add_argument("--num_cpu_for_each_process", type=int, default=10)
     parser.add_argument("--point_priority_thres", type=int, default=None)
+    parser.add_argument("--render_timeout", type=int, default=None,
+                        help="Timeout in seconds for each render subprocess. None means no timeout.")
     return parser.parse_args()
 
 
@@ -50,7 +52,13 @@ def worker(queue, count, gpu, cpu_group):
             f"--dataset_type scannetpp --point_priority_thres {args.point_priority_thres}"
         )
 
-        subprocess.run(command, shell=True)
+        subprocess.run(
+            ["bash", "-c", command],
+            timeout=args.render_timeout,
+            check=False,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
 
         print(f"{item}")
 

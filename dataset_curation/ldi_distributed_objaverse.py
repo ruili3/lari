@@ -97,15 +97,19 @@ if __name__ == "__main__":
         process.start()
         workers.append(process)
 
+    def load_json(path):
+        opener = gzip.open if path.endswith(".gz") else open
+        with opener(path, "rt", encoding="utf-8") as f:
+            return json.load(f)
+
     if args.object_bundle_range is None:
-        with gzip.open(args.object_path_file, "rt", encoding="utf-8") as f:
-            model_paths = json.load(f)
+        model_paths = load_json(args.object_path_file)
     else:
         model_paths = {}
         for bund_i in range(int(args.object_bundle_range[0]), int(args.object_bundle_range[1])):
-            with gzip.open(os.path.join(args.object_path_file, "000-{:03d}.json.gz".format(bund_i)),
-                           "rt", encoding="utf-8") as f:
-                model_paths.update(json.load(f))
+            model_paths.update(
+                load_json(os.path.join(args.object_path_file, "000-{:03d}.json.gz".format(bund_i)))
+            )
 
     model_keys = list(model_paths.keys())
     models_to_render = model_keys if args.render_first_n_scenes == -1 else model_keys[:args.render_first_n_scenes]

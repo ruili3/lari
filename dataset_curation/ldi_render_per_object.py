@@ -496,4 +496,3 @@ if __name__ == "__main__":
         save_ldi_scannetpp(args.object_path, args.camera_path, args.num_layers, args.point_priority_thres)   
     else:
         raise NotImplementedError()
-point_priority_thres
