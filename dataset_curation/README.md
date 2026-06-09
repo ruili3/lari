@@ -208,5 +208,22 @@ datasets/
   `dslr/ldi/` respectively): an `_ldi.png`/`_ldi.jpg` preview, an `_ldi.npz`
   depth-layer matrix, and sampled point-cloud `.ply` files (rendered once per scene).
 
+---
+
+## 4. Citation
+
+If you use this code to generate data for your research, please cite our paper:
+
+```bibtex
+@inproceedings{li2026lari,
+  title={LaRI: Layered Ray Intersections for Single-view 3D Geometric Reasoning},
+  author={Li, Rui and Zhang, Biao and Li, Zhenyu and Tombari, Federico and Wonka, Peter},
+  booktitle={Proceedings of the 43rd International Conference on Machine Learning},
+  series={Proceedings of Machine Learning Research},
+  publisher={PMLR},
+  year={2026}
+}
+```
+
 
 
