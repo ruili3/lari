@@ -21,6 +21,9 @@
 </p>
 
 
+## 🔔 Updates
+> **[2026-06-09]** Dataset generation code has been updated with distributed rendering support for all datasets (GSO, Objaverse, 3D-FRONT, SCRREAM, ScanNet++). See the [Dataset Curation README](dataset_curation/README.md) for full instructions.
+
 ## 📋 TODO List
 - [x] Inference code & Gradio demo
 - [x] Evaluation data & code
